@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<meta name="theme-color" content="#0f172a"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="Nawaz Shop"/>
+<title>Nawaz Scooter & Spare Parts</title>
+<link rel="manifest" href="manifest.json"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f172a;--sur:#1e293b;--bor:#334155;
+  --or:#f97316;--gr:#22c55e;--re:#ef4444;--bl:#3b82f6;
+  --mu:#64748b;--tx:#e2e8f0;--su:#94a3b8;
+}
+html,body{height:100%;background:var(--bg);color:var(--tx);font-family:'Outfit',sans-serif;-webkit-tap-highlight-color:transparent}
+body{display:flex;flex-direction:column;max-width:500px;margin:0 auto;min-height:100dvh}
+
+/* HEADER */
+.hdr{background:linear-gradient(135deg,#1e293b,#0f172a);border-bottom:1px solid var(--bor);padding:11px 15px;display:flex;align-items:center;justify-content:space-between}
+.ht{font-size:13px;font-weight:900;color:var(--or);line-height:1.2}
+.hs{font-size:9px;color:var(--mu);letter-spacing:1.5px}
+.hbdg{background:rgba(249,115,22,.15);color:var(--or);padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700;border:1px solid var(--or)}
+
+/* TABS */
+.tabs{display:flex;background:var(--sur);border-bottom:1px solid var(--bor);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;padding:10px 14px;border:none;background:transparent;color:var(--mu);font-family:inherit;font-size:11px;font-weight:700;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
+.tab.on{color:var(--or);border-bottom-color:var(--or)}
+
+/* PAGES */
+.page{display:none;flex:1;overflow-y:auto;padding:14px 13px 80px}
+.page.on{display:block}
+
+/* CARDS */
+.card{background:var(--sur);border-radius:13px;padding:15px 13px;border:1px solid var(--bor);margin-bottom:12px}
+.card-title{font-size:15px;font-weight:800;color:#f1f5f9;margin-bottom:13px}
+.lbl{font-size:10px;font-weight:800;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px}
+
+/* NATIVE INPUTS — browser handles these, no JS interference */
+input[type=text],input[type=number],input[type=search],textarea{
+  width:100%;padding:11px 12px;background:#0f172a;border:1.5px solid var(--bor);
+  border-radius:9px;color:var(--tx);font-size:15px;outline:none;font-family:inherit;
+  -webkit-appearance:none;appearance:none;
+}
+input[type=text]:focus,input[type=number]:focus,input[type=search]:focus,textarea:focus{border-color:var(--or)}
+input::placeholder,textarea::placeholder{color:var(--mu)}
+textarea{resize:none;font-family:monospace;font-size:13px;line-height:1.8}
+input[type=number]{-moz-appearance:textfield}
+input[type=number]::-webkit-inner-spin-button{opacity:1}
+
+/* GRIDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.mb{margin-bottom:10px}
+
+/* BUTTONS */
+.btn-primary{display:block;width:100%;padding:13px;background:linear-gradient(135deg,#f97316,#ea580c);color:#fff;border:none;border-radius:10px;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit;box-shadow:0 4px 16px rgba(249,115,22,.3);margin-top:10px}
+.btn-gray{background:linear-gradient(135deg,#475569,#334155);box-shadow:none}
+.btn-sm{padding:6px 12px;border:none;border-radius:7px;font-weight:700;font-size:12px;cursor:pointer;font-family:inherit}
+.btn-green{background:rgba(34,197,94,.15);color:var(--gr)}
+.btn-red{background:rgba(239,68,68,.15);color:var(--re)}
+.btn-blue{background:rgba(59,130,246,.15);color:var(--bl)}
+.btn-muted{background:rgba(51,65,85,.5);color:var(--su)}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-weight:700;font-size:11px}
+.bdg-g{background:rgba(34,197,94,.15);color:var(--gr)}
+.bdg-o{background:rgba(249,115,22,.15);color:var(--or)}
+.bdg-r{background:rgba(239,68,68,.15);color:var(--re)}
+.bdg-m{background:rgba(51,65,85,.5);color:var(--su)}
+
+/* ITEM ROWS */
+.item-row{background:#0f172a;border-radius:11px;padding:13px;border:1px solid var(--bor);margin-bottom:10px}
+.item-meta{display:flex;gap:10px;font-size:11px;color:var(--su);margin-top:5px;flex-wrap:wrap}
+
+/* INVENTORY GRID */
+.inv-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+.inv-card{background:#0f172a;border-radius:11px;padding:11px 12px;border:1.5px solid var(--bor);cursor:pointer;transition:border-color .15s;-webkit-tap-highlight-color:rgba(249,115,22,.2)}
+.inv-card:active{border-color:var(--or);transform:scale(.97)}
+.inv-card.selected{border-color:var(--or)}
+.inv-card.out-of-stock{opacity:.35;pointer-events:none}
+
+/* STATS */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.stat-card{background:var(--sur);border-radius:12px;padding:14px 12px;border:1px solid var(--bor);text-align:center}
+
+/* MISC */
+.err-box{background:rgba(239,68,68,.12);color:var(--re);padding:11px 13px;border-radius:9px;font-size:12px;font-weight:600;margin-top:8px;line-height:1.5}
+.ok-box{background:rgba(34,197,94,.12);color:var(--gr);padding:12px;border-radius:9px;font-weight:700;text-align:center;font-size:13px;margin-bottom:10px}
+.divider{border:none;border-top:1px solid var(--bor);margin:10px 0}
+.price-preview{background:#1e293b;border-radius:8px;padding:8px 11px;font-size:12px;display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.empty{text-align:center;padding:40px 20px;color:var(--mu);font-size:13px}
+
+/* MODAL */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:999;padding:16px}
+.modal.show{display:flex}
+.receipt{background:#fff;color:#1e293b;border-radius:14px;padding:20px 16px;width:100%;max-width:340px;font-family:'Courier New',monospace;max-height:90vh;overflow-y:auto}
+
+/* NOTIF */
+#notif{position:fixed;top:14px;left:50%;transform:translateX(-50%);padding:10px 18px;border-radius:10px;font-weight:700;font-size:13px;color:#fff;z-index:9999;display:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.5);max-width:92%}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;margin-right:8px;vertical-align:middle}
+@media print{body *{visibility:hidden}.receipt,.receipt *{visibility:visible}.receipt{position:fixed;inset:0}}
+</style>
+</head>
+<body>
+
+<div id="notif"></div>
+
+<!-- RECEIPT MODAL -->
+<div class="modal" id="modal">
+  <div class="receipt" id="receipt-content"></div>
+</div>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div style="display:flex;align-items:center;gap:10px">
+    <span style="font-size:22px">🔧</span>
+    <div><div class="ht">NAWAZ SCOOTER & SPARE PARTS</div><div class="hs">SHOP MANAGEMENT SYSTEM</div></div>
+  </div>
+  <span class="hbdg">Highway</span>
+</div>
+
+<!-- TABS -->
+<div class="tabs" id="tabs">
+  <button class="tab on" data-page="paste">⚡ Quick Paste</button>
+  <button class="tab" data-page="scan">📷 Scan Bill</button>
+  <button class="tab" data-page="add">➕ Manual Add</button>
+  <button class="tab" data-page="stock">📦 Stock</button>
+  <button class="tab" data-page="sale">🧑‍💼 Sale</button>
+  <button class="tab" data-page="bills">🧾 Bills</button>
+  <button class="tab" data-page="summary">📊 Summary</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE: QUICK PASTE
+════════════════════════════════════════════════════════ -->
+<div class="page on" id="page-paste">
+  <div class="card" style="background:#1e3a5f;border-color:var(--bl)">
+    <div style="font-size:13px;font-weight:800;color:#60a5fa;margin-bottom:8px">⚡ Paste Format</div>
+    <div style="font-family:monospace;font-size:12px;background:#0f172a;border-radius:8px;padding:10px 12px;line-height:2.2;color:var(--tx)">
+      <span style="color:var(--gr)">Item Name</span> | <span style="color:var(--or)">MRP</span> | <span style="color:#a855f7">Disc%</span> | <span style="color:#06b6d4">Qty</span>
+    </div>
+    <div style="font-size:11px;color:var(--mu);margin-top:8px;line-height:1.7">
+      • Separate with <b style="color:var(--tx)">|</b> &nbsp;•&nbsp; Disc% and Qty optional &nbsp;•&nbsp; Lines with # are ignored
+    </div>
+    <button class="btn-sm btn-blue" style="margin-top:10px;padding:7px 15px" onclick="loadExample()">📋 Load Example</button>
+  </div>
+
+  <div class="card">
+    <div class="g2 mb">
+      <div><label class="lbl">Supplier</label><input type="text" id="p-supplier" placeholder="e.g. Mitra"/></div>
+      <div><label class="lbl">Bill No.</label><input type="text" id="p-billno" placeholder="e.g. 1234"/></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <div class="card-title" style="margin:0">📋 Paste Items</div>
+      <button class="btn-sm btn-red" onclick="clearPaste()">Clear</button>
+    </div>
+    <textarea id="paste-area" rows="8" placeholder="Brake Shoe Activa | 280 | 10 | 2&#10;Engine Oil 1L | 520 | 5 | 1&#10;Air Filter Honda | 150 | 0 | 3&#10;&#10;# Disc% and Qty are optional"></textarea>
+    <div id="paste-err"></div>
+  </div>
+
+  <div id="paste-preview-area"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE: SCAN BILL
+════════════════════════════════════════════════════════ -->
+<div class="page" id="page-scan">
+  <div class="card">
+    <div class="card-title">📷 Scan Bill → Paste Format</div>
+    <p style="font-size:12px;color:var(--su);margin-bottom:12px;line-height:1.6">Upload photo → AI reads it → copy text → go to ⚡ Quick Paste tab → paste → save.</p>
+    <div id="scan-zone" style="border:2px dashed var(--bor);border-radius:12px;min-height:140px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#0f172a;margin-bottom:12px;overflow:hidden">
+      <div style="text-align:center;padding:20px" id="scan-ph">
+        <div style="font-size:36px">📄</div>
+        <div style="color:var(--su);font-weight:700;margin-top:8px;font-size:13px">Tap to take photo or upload bill</div>
+        <div style="color:var(--mu);font-size:11px;margin-top:4px">Clear bright photo = better reading</div>
+      </div>
+    </div>
+    <input type="file" id="scan-file" accept="image/*" capture="environment" style="display:none"/>
+    <button class="btn-primary" id="btn-scan" style="display:none" onclick="doScan()">🔍 Extract Items from Image</button>
+    <div id="scan-loading" style="display:none"><button class="btn-primary" disabled><span class="spinner"></span>Reading bill... please wait</button></div>
+    <div id="scan-err"></div>
+    <div id="scan-result" style="display:none">
+      <div class="card" style="background:#0f172a;margin-top:8px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+          <div style="font-weight:800;font-size:14px">✅ Ready to paste <span id="scan-item-count" style="font-size:11px;background:rgba(249,115,22,.2);color:var(--or);padding:2px 9px;border-radius:20px;font-weight:700;margin-left:6px"></span></div>
+          <button class="btn-sm btn-green" id="btn-copy">📋 Copy</button>
+        </div>
+        <textarea id="scan-output" readonly rows="10" style="color:var(--gr);font-size:12px;background:#0a0f1a;border-color:#1e3a5f;cursor:text" onclick="this.select()"></textarea>
+        <p style="font-size:11px;color:var(--mu);margin-top:8px">👆 Tap text to select → Copy → Go to ⚡ Quick Paste tab → Paste → Save</p>
+        <div class="g2" style="margin-top:10px">
+          <button class="btn-primary" style="margin-top:0" onclick="goToPasteTab()">⚡ Go to Quick Paste</button>
+          <button class="btn-primary btn-gray" style="margin-top:0" onclick="resetScan()">🔄 Scan Another</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE: MANUAL ADD
+════════════════════════════════════════════════════════ -->
+<div class="page" id="page-add">
+  <div class="card">
+    <div class="card-title">➕ Manual Entry</div>
+    <div class="g2 mb">
+      <div><label class="lbl">Supplier</label><input type="text" id="a-sup" placeholder="e.g. Mitra"/></div>
+      <div><label class="lbl">Bill No.</label><input type="text" id="a-bn" placeholder="e.g. 1234"/></div>
+    </div>
+  </div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:13px">
+      <div class="card-title" style="margin:0">Items</div>
+      <button class="btn-sm btn-blue" onclick="addManualRow()">+ Add Row</button>
+    </div>
+    <div id="manual-rows"></div>
+    <button class="btn-sm btn-muted" style="width:100%;padding:11px;border:2px dashed var(--bor);border-radius:10px;background:transparent;margin-top:4px" onclick="addManualRow()">+ Add Another Item</button>
+  </div>
+  <div class="card" id="manual-summary" style="display:none">
+    <div style="display:flex;justify-content:space-between;margin-bottom:12px">
+      <span style="font-weight:700;color:var(--su)" id="manual-count">0 items</span>
+      <span style="font-weight:900;font-size:18px;color:var(--or)" id="manual-total">₹0</span>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center">
+      <span style="font-size:12px;color:var(--su);font-weight:700">Status:</span>
+      <button class="btn-sm" id="a-paid" onclick="setAddStatus('paid')" style="background:var(--or);color:#fff;padding:7px 14px">✅ Paid</button>
+      <button class="btn-sm btn-muted" id="a-bal" onclick="setAddStatus('balance')" style="padding:7px 14px">⏳ Balance</button>
+    </div>
+    <button class="btn-primary" onclick="saveManual()">💾 Save to Inventory</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE: STOCK
+════════════════════════════════════════════════════════ -->
+<div class="page" id="page-stock">
+  <div class="card">
+    <div class="card-title">📦 Stock <span id="stock-count" style="font-size:12px;color:var(--mu);font-weight:600"></span></div>
+    <input type="search" id="stock-search" placeholder="🔍 Search items..." class="mb" oninput="renderStockList()"/>
+    <div id="stock-list"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE: SALE
+════════════════════════════════════════════════════════ -->
+<div class="page" id="page-sale">
+  <div class="card">
+    <div class="card-title">🧑‍💼 Customer Sale</div>
+    <input type="text" id="c-name" placeholder="Customer Name (optional)" class="mb"/>
+    <div class="g2 mb">
+      <input type="text" id="c-phone" placeholder="Phone No." inputmode="numeric"/>
+      <input type="text" id="c-vehicle" placeholder="Vehicle No."/>
+    </div>
+    <label class="lbl">Select Items from Stock</label>
+    <input type="search" id="sale-search" placeholder="🔍 Search..." class="mb" oninput="renderSaleInv()"/>
+    <div id="sale-inv" class="inv-grid"></div>
+    <div id="sale-bill"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE: BILLS
+════════════════════════════════════════════════════════ -->
+<div class="page" id="page-bills">
+  <div class="card">
+    <div class="card-title">🧾 Bills <span id="bills-count" style="font-size:12px;color:var(--mu);font-weight:600"></span></div>
+    <input type="search" id="bills-search" placeholder="🔍 Search..." class="mb" oninput="renderBillsList()"/>
+    <div class="filter-row" id="bill-filters">
+      <button class="btn-sm" style="background:var(--or);color:#fff;padding:5px 12px" data-f="all" onclick="setBillFilter('all')">All</button>
+      <button class="btn-sm btn-muted" style="padding:5px 12px" data-f="purchase" onclick="setBillFilter('purchase')">📦 Purchase</button>
+      <button class="btn-sm btn-muted" style="padding:5px 12px" data-f="sale" onclick="setBillFilter('sale')">🧑‍💼 Sales</button>
+      <button class="btn-sm btn-muted" style="padding:5px 12px" data-f="balance" onclick="setBillFilter('balance')">⏳ Balance</button>
+    </div>
+    <div id="bills-list"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE: SUMMARY
+════════════════════════════════════════════════════════ -->
+<div class="page" id="page-summary">
+  <div class="stat-grid" id="stat-grid"></div>
+  <div id="low-stock-alert"></div>
+</div>
+
+<!-- ═══ JAVASCRIPT ═════════════════════════════════════ -->
+<script>
+// ── STORAGE ──────────────────────────────────────────────────────────────────
+const DB={
+  get:(k,d)=>{try{const v=localStorage.getItem('ns5_'+k);return v?JSON.parse(v):d}catch{return d}},
+  set:(k,v)=>{try{localStorage.setItem('ns5_'+k,JSON.stringify(v))}catch{}}
+};
+
+// ── STATE (no reactive rendering — all UI is static HTML updated by direct DOM) ─
+let INV   = DB.get('inv',[{id:1,name:'Brake Shoe (Activa)',mrp:280,discountPct:10,qty:15},{id:2,name:'Engine Oil 1L (Motul)',mrp:520,discountPct:5,qty:8}]);
+let BILLS = DB.get('bills',[]);
+let NID   = DB.get('nid',100);
+let SALE_ITEMS = [];
+let ADD_STATUS = 'paid';
+let BILL_FILTER = 'all';
+let SCAN_IMG = null, SCAN_TYPE = null;
+
+const fmt = n => '₹'+Number(n).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+const esc = s => String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function newId(){NID++;DB.set('nid',NID);return NID}
+function persist(){DB.set('inv',INV);DB.set('bills',BILLS)}
+function notify(msg,type='success'){
+  const el=document.getElementById('notif');
+  el.textContent=msg;el.style.background=type==='success'?'#22c55e':type==='error'?'#ef4444':'#3b82f6';
+  el.style.display='block';clearTimeout(el._t);el._t=setTimeout(()=>el.style.display='none',3000);
+}
+
+// ── TABS ── switching just shows/hides pre-existing HTML divs ─────────────────
+document.getElementById('tabs').addEventListener('click',function(e){
+  const btn=e.target.closest('.tab');if(!btn)return;
+  const page=btn.dataset.page;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t===btn));
+  document.querySelectorAll('.page').forEach(p=>p.classList.toggle('on',p.id==='page-'+page));
+  if(page==='stock')   refreshStock();
+  if(page==='sale')    {renderSaleInv();renderSaleBill();}
+  if(page==='bills')   renderBillsList();
+  if(page==='summary') renderSummary();
+});
+
+// ── PARSER ────────────────────────────────────────────────────────────────────
+function parsePaste(text){
+  const lines=text.split('\n').map(l=>l.trim()).filter(l=>l&&!l.startsWith('#')&&!l.startsWith('//'));
+  const items=[],errors=[];
+  lines.forEach((line,i)=>{
+    const parts=line.split('|').map(p=>p.trim());
+    if(parts.length<2){errors.push('Line '+(i+1)+': Need Name | MRP');return}
+    const name=parts[0],mrp=parseFloat(parts[1]);
+    if(!name||isNaN(mrp)||mrp<=0){errors.push('Line '+(i+1)+': Invalid data');return}
+    const disc=parts.length>=3?parseFloat(parts[2])||0:0;
+    const qty=parts.length>=4?Math.max(1,parseInt(parts[3])||1):1;
+    items.push({name,mrp,discountPct:disc,priceAfterDiscount:parseFloat((mrp*(1-disc/100)).toFixed(2)),qty});
+  });
+  return{items,errors};
+}
+
+// ══ QUICK PASTE ═══════════════════════════════════════════════════════════════
+// Textarea is a static HTML element — browser owns it — JS only reads on demand
+
+document.getElementById('paste-area').addEventListener('input',function(){
+  updatePastePreview(this.value);
+});
+
+function updatePastePreview(text){
+  const errEl=document.getElementById('paste-err');
+  const prevEl=document.getElementById('paste-preview-area');
+  if(!text.trim()){errEl.innerHTML='';prevEl.innerHTML='';return}
+  const {items,errors}=parsePaste(text);
+  errEl.innerHTML=errors.length?`<div class="err-box">⚠️ ${errors.length} line${errors.length>1?'s':''} skipped:<br/><code style="font-size:11px">${errors.map(esc).join('<br/>')}</code></div>`:'';
+  if(!items.length){prevEl.innerHTML='';return}
+  const gt=items.reduce((s,i)=>s+i.priceAfterDiscount*i.qty,0);
+  prevEl.innerHTML=`<div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div style="font-weight:800;font-size:14px">✅ ${items.length} item${items.length>1?'s':''} ready</div>
+      <div style="font-weight:900;font-size:16px;color:var(--or)">${fmt(gt)}</div>
+    </div>
+    <div style="overflow-x:auto;margin-bottom:12px"><table style="width:100%;border-collapse:collapse;font-size:11px">
+      <thead><tr>${['Item','MRP','Disc%','Final','Qty','Total'].map(h=>`<th style="text-align:left;padding:5px 6px;background:#0f172a;color:var(--mu);font-size:10px">${h}</th>`).join('')}</tr></thead>
+      <tbody>${items.map((it,i)=>`<tr style="background:${i%2===0?'rgba(15,23,42,.5)':'transparent'}">
+        <td style="padding:5px 6px;color:var(--tx);font-weight:600;font-size:11px">${esc(it.name)}</td>
+        <td style="padding:5px 6px;color:var(--su);font-size:11px">${fmt(it.mrp)}</td>
+        <td style="padding:5px 6px;color:var(--gr);font-weight:700;font-size:11px">${it.discountPct}%</td>
+        <td style="padding:5px 6px;color:var(--or);font-weight:700;font-size:11px">${fmt(it.priceAfterDiscount)}</td>
+        <td style="padding:5px 6px;color:var(--su);font-size:11px">${it.qty}</td>
+        <td style="padding:5px 6px;color:#a855f7;font-weight:700;font-size:11px">${fmt(it.priceAfterDiscount*it.qty)}</td>
+      </tr>`).join('')}</tbody>
+    </table></div>
+    <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center">
+      <span style="font-size:12px;color:var(--su);font-weight:700">Bill Status:</span>
+      <button id="pp-paid" class="btn-sm" style="background:var(--or);color:#fff;padding:7px 14px" onclick="setPasteStatus('paid',${JSON.stringify(items).replace(/"/g,'&quot;')})">✅ Paid</button>
+      <button id="pp-bal" class="btn-sm btn-muted" style="padding:7px 14px" onclick="setPasteStatus('balance',${JSON.stringify(items).replace(/"/g,'&quot;')})">⏳ Balance</button>
+    </div>
+    <button class="btn-primary" onclick="savePaste()">💾 Save to Inventory</button>
+  </div>`;
+}
+
+let PASTE_STATUS='paid';
+function setPasteStatus(s){
+  PASTE_STATUS=s;
+  document.getElementById('pp-paid')?.style.setProperty('background',s==='paid'?'var(--or)':'rgba(51,65,85,.5)');
+  document.getElementById('pp-paid')?.style.setProperty('color',s==='paid'?'#fff':'var(--su)');
+  document.getElementById('pp-bal')?.style.setProperty('background',s==='balance'?'var(--or)':'rgba(51,65,85,.5)');
+  document.getElementById('pp-bal')?.style.setProperty('color',s==='balance'?'#fff':'var(--su)');
+}
+
+function savePaste(){
+  const text=document.getElementById('paste-area').value;
+  const {items,errors}=parsePaste(text);
+  if(!items.length){notify('No valid items to save','error');return}
+  const supplier=document.getElementById('p-supplier').value||'Quick Paste';
+  const billNo=document.getElementById('p-billno').value||'-';
+  addToInv(items);
+  const total=items.reduce((s,i)=>s+i.priceAfterDiscount*i.qty,0);
+  BILLS.unshift({id:'BILL-'+Date.now(),type:'purchase',supplier,billDate:new Date().toLocaleDateString('en-IN'),billNo,items,total,status:PASTE_STATUS,savedAt:new Date().toISOString()});
+  persist();notify('✅ '+items.length+' items added to inventory!');
+  document.getElementById('paste-preview-area').innerHTML=`
+    <div class="ok-box">✅ ${items.length} item${items.length>1?'s':''} saved to inventory!</div>
+    <div class="card" style="margin-top:0">
+      <div style="font-size:12px;font-weight:800;color:#64748b;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px">📋 Bill Summary</div>
+      ${items.map(i=>`
+        <div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bor);font-size:12px">
+          <span style="flex:1;color:var(--tx);font-weight:600">${esc(i.name)}</span>
+          <span style="color:var(--su);margin:0 8px">×${i.qty}</span>
+          <span style="color:var(--or);font-weight:700">${fmt(i.priceAfterDiscount*i.qty)}</span>
+        </div>`).join('')}
+      <div style="display:flex;justify-content:space-between;padding:10px 0 4px;font-size:15px;font-weight:900">
+        <span style="color:var(--tx)">${items.length} items · Grand Total</span>
+        <span style="color:var(--or)">${fmt(items.reduce((s,i)=>s+i.priceAfterDiscount*i.qty,0))}</span>
+      </div>
+    </div>`;
+}
+
+function clearPaste(){
+  document.getElementById('paste-area').value='';
+  document.getElementById('paste-err').innerHTML='';
+  document.getElementById('paste-preview-area').innerHTML='';
+  document.getElementById('p-supplier').value='';
+  document.getElementById('p-billno').value='';
+}
+
+const EXAMPLE=`# Format: Name | MRP | Disc% | Qty
+Carburator Float Pin Kit Bajaj OE | 124 | 14 | 1
+Ignition Switch SPL OE | 515 | 15 | 1
+Brake Shoe Activa N/M ASK White | 115 | 0 | 10
+Petrol Pipe Shine OE | 53 | 25 | 5
+Crank Shaft Seal Pleasure | 42 | 15 | 10
+Side Mirror Activa N/M | 270 | 25 | 2
+Self Gear Activa O/M | 437 | 15 | 2
+Side Stand Activa | 132 | 45 | 6
+Drum Rubber Unicorn CBZ Xtreme | 90 | 45 | 5
+Tapped Nut HH SPL | 29 | 15 | 2
+Front Brake Cable Activa N/M | 188 | 55 | 10
+Front Brake Cable Activa N/M RH | 188 | 55 | 10`;
+
+function loadExample(){
+  const ta=document.getElementById('paste-area');
+  ta.value=EXAMPLE;updatePastePreview(EXAMPLE);
+}
+
+// ══ SCAN ══════════════════════════════════════════════════════════════════════
+document.getElementById('scan-zone').addEventListener('click',()=>document.getElementById('scan-file').click());
+document.getElementById('scan-file').addEventListener('change',function(){
+  const f=this.files[0];if(!f)return;
+  SCAN_IMG=null;SCAN_TYPE=f.type||'image/jpeg';
+  const zone=document.getElementById('scan-zone');
+  const img=document.createElement('img');
+  img.style.cssText='max-height:210px;max-width:100%;object-fit:contain;border-radius:10px';
+  zone.innerHTML='';zone.appendChild(img);
+  img.src=URL.createObjectURL(f);
+  document.getElementById('btn-scan').style.display='block';
+  document.getElementById('scan-result').style.display='none';
+  document.getElementById('scan-err').innerHTML='';
+  const r=new FileReader();r.onload=()=>{SCAN_IMG=r.result.split(',')[1]};r.readAsDataURL(f);
+});
+
+const SCAN_PROMPT=`You are a bill scanner for an Indian two-wheeler spare parts shop.
+Extract ALL line items from this bill image.
+Return ONLY plain text, one item per line, NOTHING else:
+ItemName | MRP | Disc% | Qty
+Rules: MRP=List Price column, Disc%=Discount column number only, qty=Qty column number only. Default disc=0, default qty=1. No headers, no totals, no supplier info, no extra text at all.`;
+
+async function doScan(){
+  if(!SCAN_IMG){notify('Please select an image first','error');return}
+  document.getElementById('btn-scan').style.display='none';
+  document.getElementById('scan-loading').style.display='block';
+  document.getElementById('scan-err').innerHTML='';
+  document.getElementById('scan-result').style.display='none';
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:[
+        {type:'image',source:{type:'base64',media_type:SCAN_TYPE,data:SCAN_IMG}},
+        {type:'text',text:SCAN_PROMPT}
+      ]}]})});
+    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e?.error?.message||'API error '+res.status)}
+    const data=await res.json();
+    const text=(data.content||[]).map(c=>c.text||'').join('').trim();
+    const lines=text.split('\n').filter(l=>l.trim()&&l.includes('|'));
+    if(!lines.length)throw new Error('Could not read items. Try a clearer, brighter photo.');
+    document.getElementById('scan-output').value=lines.join('\n');
+    document.getElementById('scan-result').style.display='block';
+    const countEl=document.getElementById('scan-item-count');
+    if(countEl)countEl.textContent=lines.length+' item'+(lines.length>1?'s':'');
+  }catch(err){
+    document.getElementById('scan-err').innerHTML=`<div class="err-box">❌ ${esc(err.message)}<br/><small>Tip: Use Quick Paste tab and type manually — it always works.</small></div>`;
+    document.getElementById('btn-scan').style.display='block';
+  }
+  document.getElementById('scan-loading').style.display='none';
+}
+
+document.getElementById('btn-copy').addEventListener('click',function(){
+  const el=document.getElementById('scan-output');el.select();
+  navigator.clipboard?.writeText(el.value)||document.execCommand('copy');
+  this.textContent='✅ Copied!';setTimeout(()=>this.textContent='📋 Copy',2500);
+  notify('📋 Copied! Now go to Quick Paste tab');
+});
+
+function goToPasteTab(){
+  const scanText=document.getElementById('scan-output').value;
+  if(scanText){
+    document.getElementById('paste-area').value=scanText;
+    updatePastePreview(scanText);
+  }
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.page==='paste'));
+  document.querySelectorAll('.page').forEach(p=>p.classList.toggle('on',p.id==='page-paste'));
+}
+
+function resetScan(){
+  SCAN_IMG=null;
+  document.getElementById('scan-zone').innerHTML=`<div style="text-align:center;padding:20px"><div style="font-size:36px">📄</div><div style="color:var(--su);font-weight:700;margin-top:8px;font-size:13px">Tap to take photo or upload bill</div><div style="color:var(--mu);font-size:11px;margin-top:4px">Clear bright photo = better reading</div></div>`;
+  document.getElementById('btn-scan').style.display='none';
+  document.getElementById('scan-result').style.display='none';
+  document.getElementById('scan-err').innerHTML='';
+  document.getElementById('scan-file').value='';
+}
+
+// ══ MANUAL ADD ════════════════════════════════════════════════════════════════
+// Each row is a static HTML form — inputs are never recreated while typing
+let MANUAL_ROWS=[];
+let MANUAL_RK=1;
+
+function addManualRow(){
+  const k=MANUAL_RK++;
+  MANUAL_ROWS.push({k});
+  const div=document.createElement('div');
+  div.className='item-row';div.id='mrow-'+k;
+  div.innerHTML=`
+    <div style="display:flex;justify-content:space-between;margin-bottom:9px">
+      <span class="lbl" style="margin:0">ITEM ${MANUAL_ROWS.length}</span>
+      <button class="btn-sm btn-red" style="padding:2px 9px;font-size:11px" onclick="removeManualRow(${k})">✕ Remove</button>
+    </div>
+    <label class="lbl">Item Name *</label>
+    <input type="text" id="mn-${k}" class="manual-name mb" data-k="${k}" placeholder="e.g. Brake Shoe Activa"/>
+    <div class="g3">
+      <div><label class="lbl">MRP ₹ *</label><input type="number" id="mm-${k}" class="manual-mrp" data-k="${k}" inputmode="decimal" placeholder="0" min="0"/></div>
+      <div><label class="lbl">Disc %</label><input type="number" id="md-${k}" class="manual-disc" data-k="${k}" inputmode="decimal" placeholder="0" min="0" max="99"/></div>
+      <div><label class="lbl">Qty</label><input type="number" id="mq-${k}" class="manual-qty" data-k="${k}" inputmode="numeric" placeholder="1" min="1"/></div>
+    </div>
+    <div id="mp-${k}" class="price-preview" style="display:none">
+      <span id="mp-left-${k}" style="color:var(--or);font-weight:800"></span>
+      <span id="mp-right-${k}" style="color:#a855f7;font-weight:800"></span>
+    </div>`;
+  document.getElementById('manual-rows').appendChild(div);
+  // Wire price preview — input event on number fields patches only the preview div
+  const wirePreview=()=>{
+    const mrp=parseFloat(document.getElementById('mm-'+k).value)||0;
+    const disc=parseFloat(document.getElementById('md-'+k).value)||0;
+    const qty=parseInt(document.getElementById('mq-'+k).value)||1;
+    const price=mrp*(1-disc/100);const rt=price*qty;
+    const pd=document.getElementById('mp-'+k);
+    if(mrp>0){
+      pd.style.display='flex';
+      document.getElementById('mp-left-'+k).innerHTML=`<span style="color:var(--mu);text-decoration:line-through;margin-right:6px">₹${mrp.toFixed(2)}</span>${disc>0?`<span style="color:var(--gr);margin-right:6px">${disc}% off</span>`:''}<span style="color:var(--or)">₹${price.toFixed(2)}</span>`;
+      document.getElementById('mp-right-'+k).textContent=`×${qty} = ₹${rt.toFixed(2)}`;
+    } else pd.style.display='none';
+    updateManualSummary();
+  };
+  document.getElementById('mm-'+k).addEventListener('input',wirePreview);
+  document.getElementById('md-'+k).addEventListener('input',wirePreview);
+  document.getElementById('mq-'+k).addEventListener('input',wirePreview);
+  updateManualSummary();
+}
+
+function removeManualRow(k){
+  MANUAL_ROWS=MANUAL_ROWS.filter(r=>r.k!==k);
+  document.getElementById('mrow-'+k)?.remove();
+  updateManualSummary();
+}
+
+function updateManualSummary(){
+  const rows=getManualData();
+  const valid=rows.filter(r=>r.name&&r.mrp>0);
+  const total=valid.reduce((s,r)=>s+r.priceAfterDiscount*r.qty,0);
+  const sumCard=document.getElementById('manual-summary');
+  if(valid.length){
+    sumCard.style.display='block';
+    document.getElementById('manual-count').textContent=valid.length+' item'+(valid.length>1?'s':'');
+    document.getElementById('manual-total').textContent=fmt(total);
+  } else sumCard.style.display='none';
+}
+
+function getManualData(){
+  return MANUAL_ROWS.map(r=>{
+    const name=(document.getElementById('mn-'+r.k)?.value||'').trim();
+    const mrp=parseFloat(document.getElementById('mm-'+r.k)?.value)||0;
+    const disc=parseFloat(document.getElementById('md-'+r.k)?.value)||0;
+    const qty=parseInt(document.getElementById('mq-'+r.k)?.value)||1;
+    return{name,mrp,discountPct:disc,priceAfterDiscount:parseFloat((mrp*(1-disc/100)).toFixed(2)),qty};
+  });
+}
+
+function setAddStatus(s){
+  ADD_STATUS=s;
+  document.getElementById('a-paid').style.cssText=`background:${s==='paid'?'var(--or)':'rgba(51,65,85,.5)'};color:${s==='paid'?'#fff':'var(--su)'};padding:7px 14px`;
+  document.getElementById('a-bal').style.cssText=`background:${s==='balance'?'var(--or)':'rgba(51,65,85,.5)'};color:${s==='balance'?'#fff':'var(--su)'};padding:7px 14px`;
+}
+
+function saveManual(){
+  const rows=getManualData().filter(r=>r.name&&r.mrp>0);
+  if(!rows.length){notify('Add at least one item with name and MRP','error');return}
+  addToInv(rows);
+  const total=rows.reduce((s,r)=>s+r.priceAfterDiscount*r.qty,0);
+  const supplier=document.getElementById('a-sup').value||'Manual Entry';
+  const billNo=document.getElementById('a-bn').value||'-';
+  BILLS.unshift({id:'BILL-'+Date.now(),type:'purchase',supplier,billDate:new Date().toLocaleDateString('en-IN'),billNo,items:rows,total,status:ADD_STATUS,savedAt:new Date().toISOString()});
+  persist();notify('✅ '+rows.length+' items saved!');
+  // Reset form — rebuild rows from scratch
+  MANUAL_ROWS=[];MANUAL_RK=1;
+  document.getElementById('manual-rows').innerHTML='';
+  document.getElementById('a-sup').value='';document.getElementById('a-bn').value='';
+  document.getElementById('manual-summary').style.display='none';
+  addManualRow();
+}
+
+function openWAChat(){
+  let phone=(document.getElementById('c-phone').value||'').replace(/[\s\-\(\)]/g,'');
+  if(!phone){notify('Enter customer phone number first','error');return}
+  if(!phone.startsWith('91')&&!phone.startsWith('+')){phone='91'+phone}
+  phone=phone.replace(/^\+/,'');
+  window.open('https://wa.me/'+phone,'_blank');
+}
+
+// ══ STOCK ══════════════════════════════════════════════════════════════════════
+let EDIT_ID=null,EDIT_VALS={};
+
+function refreshStock(){
+  document.getElementById('stock-count').textContent='('+INV.length+')';
+  renderStockList();
+}
+
+function renderStockList(){
+  const q=(document.getElementById('stock-search')?.value||'').toLowerCase();
+  const list=INV.filter(i=>i.name.toLowerCase().includes(q));
+  const el=document.getElementById('stock-list');
+  if(!list.length){el.innerHTML=`<div class="empty">No items found.</div>`;return}
+  el.innerHTML=list.map(item=>{
+    if(EDIT_ID===item.id) return `
+      <div class="item-row">
+        <input type="text" id="ev-name" value="${esc(item.name)}" class="mb" placeholder="Item name"/>
+        <div class="g3 mb">
+          <input type="number" id="ev-mrp" value="${item.mrp}" placeholder="MRP" inputmode="decimal"/>
+          <input type="number" id="ev-disc" value="${item.discountPct}" placeholder="Disc%" inputmode="decimal"/>
+          <input type="number" id="ev-qty" value="${item.qty}" placeholder="Qty" inputmode="numeric"/>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn-sm btn-green" style="flex:1;padding:9px" onclick="saveEdit(${item.id})">✅ Save</button>
+          <button class="btn-sm btn-muted" style="flex:1;padding:9px" onclick="cancelEdit()">Cancel</button>
+        </div>
+      </div>`;
+    return `
+      <div class="item-row">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div style="font-weight:700;font-size:13px;flex:1">${esc(item.name)}</div>
+          <span class="badge ${item.qty<5?'bdg-r':'bdg-g'}" style="margin-left:8px;white-space:nowrap">Qty: ${item.qty}</span>
+        </div>
+        <div class="item-meta">
+          <span>MRP: <b style="color:var(--tx)">${fmt(item.mrp)}</b></span>
+          <span>Disc: <b style="color:var(--gr)">${item.discountPct}%</b></span>
+          <span>Dealer: <b style="color:var(--or)">${fmt(item.mrp*(1-item.discountPct/100))}</b></span>
+        </div>
+        <div style="display:flex;gap:7px;margin-top:10px">
+          <button class="btn-sm btn-green" onclick="adjQty(${item.id},1)">+ Stock</button>
+          <button class="btn-sm btn-red" onclick="adjQty(${item.id},-1)">− Stock</button>
+          <button class="btn-sm btn-blue" style="margin-left:auto" onclick="startEdit(${item.id})">✏️ Edit</button>
+          <button class="btn-sm btn-red" onclick="delItem(${item.id})">🗑</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function adjQty(id,d){const i=INV.find(x=>x.id===id);if(i){i.qty=Math.max(0,i.qty+d);persist();renderStockList()}}
+function startEdit(id){EDIT_ID=id;renderStockList();setTimeout(()=>document.getElementById('ev-name')?.focus(),50)}
+function cancelEdit(){EDIT_ID=null;renderStockList()}
+function saveEdit(id){
+  const i=INV.find(x=>x.id===id);
+  if(i){
+    i.name=document.getElementById('ev-name').value||i.name;
+    i.mrp=parseFloat(document.getElementById('ev-mrp').value)||i.mrp;
+    i.discountPct=parseFloat(document.getElementById('ev-disc').value)||0;
+    i.qty=parseInt(document.getElementById('ev-qty').value)||i.qty;
+    EDIT_ID=null;persist();notify('✅ Updated');renderStockList();
+  }
+}
+function delItem(id){INV=INV.filter(i=>i.id!==id);persist();notify('🗑 Removed');refreshStock()}
+
+// ══ SALE ══════════════════════════════════════════════════════════════════════
+function renderSaleInv(){
+  const q=(document.getElementById('sale-search')?.value||'').toLowerCase();
+  const selIds=new Set(SALE_ITEMS.map(i=>i.id));
+  const list=INV.filter(i=>i.name.toLowerCase().includes(q));
+  const el=document.getElementById('sale-inv');
+  el.innerHTML=list.map(item=>`
+    <div class="inv-card ${item.qty===0?'out-of-stock':''} ${selIds.has(item.id)?'selected':''}" onclick="addSaleItem(${item.id})">
+      <div style="font-weight:700;font-size:12px;margin-bottom:5px;line-height:1.4">${esc(item.name)}</div>
+      <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:2px">
+        <span style="color:var(--mu);text-decoration:line-through">${fmt(item.mrp)}</span>
+        <span style="color:var(--gr);font-weight:700">${item.discountPct}% off</span>
+      </div>
+      <div style="color:var(--or);font-weight:900;font-size:15px">${fmt(item.mrp*(1-item.discountPct/100))}</div>
+      <span class="badge ${item.qty<5?'bdg-r':'bdg-g'}" style="margin-top:5px">Stock: ${item.qty}</span>
+    </div>`).join('');
+}
+
+function addSaleItem(id){
+  const inv=INV.find(i=>i.id===id);if(!inv||inv.qty===0)return;
+  const ex=SALE_ITEMS.find(i=>i.id===id);
+  if(ex)ex.qty++;
+  else SALE_ITEMS.push({id:inv.id,name:inv.name,mrp:inv.mrp,discountPct:inv.discountPct,qty:1,sp:parseFloat((inv.mrp*(1-inv.discountPct/100)).toFixed(2))});
+  renderSaleBill();renderSaleInv();
+}
+
+let SALE_STATUS='paid';
+
+function renderSaleBill(){
+  const el=document.getElementById('sale-bill');
+  if(!SALE_ITEMS.length){el.innerHTML='';return}
+  const total=SALE_ITEMS.reduce((s,i)=>s+i.sp*i.qty,0);
+  el.innerHTML=`<hr class="divider"/>
+  <div class="lbl" style="margin-bottom:10px">BILL ITEMS</div>
+  ${SALE_ITEMS.map(item=>`
+    <div class="item-row" style="margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+        <span style="font-weight:700;font-size:13px;flex:1">${esc(item.name)}</span>
+        <button class="btn-sm btn-red" style="padding:2px 8px;margin-left:8px" onclick="removeSaleItem(${item.id})">✕</button>
+      </div>
+      <div class="g3">
+        <div>
+          <label class="lbl">QTY</label>
+          <input type="number" min="1" style="padding:7px 9px;font-size:13px" value="${item.qty}"
+            oninput="updateSaleQty(${item.id},this.value)"/>
+        </div>
+        <div>
+          <label class="lbl">PRICE ₹</label>
+          <input type="number" min="0" step="0.5" style="padding:7px 9px;font-size:13px" value="${item.sp}"
+            oninput="updateSaleSP(${item.id},this.value)"/>
+        </div>
+        <div>
+          <label class="lbl">TOTAL</label>
+          <div id="st-${item.id}" style="padding:7px 0;font-size:14px;font-weight:900;color:var(--or)">${fmt(item.sp*item.qty)}</div>
+        </div>
+      </div>
+    </div>`).join('')}
+  <div style="text-align:right;font-size:19px;font-weight:900;color:var(--or);margin:12px 0" id="sale-grand">Grand Total: ${fmt(total)}</div>
+
+  <div style="background:#0f172a;border-radius:10px;padding:12px;margin-bottom:10px">
+    <div style="font-size:11px;font-weight:800;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Payment Status</div>
+    <div style="display:flex;gap:8px">
+      <button id="ss-paid" onclick="setSaleStatus('paid')"
+        style="flex:1;padding:10px;border:none;border-radius:9px;font-weight:800;font-size:13px;cursor:pointer;font-family:inherit;
+               background:${SALE_STATUS==='paid'?'#22c55e':'rgba(51,65,85,.5)'};
+               color:${SALE_STATUS==='paid'?'#fff':'var(--su)'}">
+        ✅ Paid
+      </button>
+      <button id="ss-bal" onclick="setSaleStatus('balance')"
+        style="flex:1;padding:10px;border:none;border-radius:9px;font-weight:800;font-size:13px;cursor:pointer;font-family:inherit;
+               background:${SALE_STATUS==='balance'?'#f97316':'rgba(51,65,85,.5)'};
+               color:${SALE_STATUS==='balance'?'#fff':'var(--su)'}">
+        ⏳ Balance Due
+      </button>
+    </div>
+  </div>
+
+  <button class="btn-primary" onclick="generateReceipt()">🧾 Generate Receipt</button>`;
+}
+
+// These patch ONLY total cell — keyboard stays open
+function updateSaleQty(id,v){
+  const i=SALE_ITEMS.find(x=>x.id===id);if(!i)return;
+  i.qty=Math.max(1,parseInt(v)||1);
+  const c=document.getElementById('st-'+id);if(c)c.textContent=fmt(i.sp*i.qty);
+  const g=document.getElementById('sale-grand');if(g)g.textContent='Grand Total: '+fmt(SALE_ITEMS.reduce((s,x)=>s+x.sp*x.qty,0));
+}
+function updateSaleSP(id,v){
+  const i=SALE_ITEMS.find(x=>x.id===id);if(!i)return;
+  i.sp=parseFloat(v)||0;
+  const c=document.getElementById('st-'+id);if(c)c.textContent=fmt(i.sp*i.qty);
+  const g=document.getElementById('sale-grand');if(g)g.textContent='Grand Total: '+fmt(SALE_ITEMS.reduce((s,x)=>s+x.sp*x.qty,0));
+}
+function removeSaleItem(id){
+  SALE_ITEMS=SALE_ITEMS.filter(i=>i.id!==id);renderSaleBill();renderSaleInv();
+}
+
+function setSaleStatus(s){
+  SALE_STATUS=s;
+  const paid=document.getElementById('ss-paid');
+  const bal=document.getElementById('ss-bal');
+  if(paid){paid.style.background=s==='paid'?'#22c55e':'rgba(51,65,85,.5)';paid.style.color=s==='paid'?'#fff':'var(--su)';}
+  if(bal){bal.style.background=s==='balance'?'#f97316':'rgba(51,65,85,.5)';bal.style.color=s==='balance'?'#fff':'var(--su)';}
+}
+
+function generateReceipt(){
+  if(!SALE_ITEMS.length)return;
+  const total=SALE_ITEMS.reduce((s,i)=>s+i.sp*i.qty,0);
+  const cname=document.getElementById('c-name').value||'Walk-in Customer';
+  const cphone=document.getElementById('c-phone').value||'';
+  const cveh=document.getElementById('c-vehicle').value||'';
+  const bill={id:'RCP-'+Date.now(),type:'sale',customer:cname,phone:cphone,vehicle:cveh,
+    items:SALE_ITEMS.map(i=>({name:i.name,mrp:i.mrp,sellingPrice:i.sp,qty:i.qty})),
+    total,status:SALE_STATUS,savedAt:new Date().toISOString()};
+  SALE_ITEMS.forEach(ci=>{const inv=INV.find(i=>i.id===ci.id);if(inv)inv.qty=Math.max(0,inv.qty-ci.qty)});
+  BILLS.unshift(bill);persist();showReceipt(bill);
+  SALE_ITEMS=[];SALE_STATUS='paid';
+  document.getElementById('c-name').value='';document.getElementById('c-phone').value='';document.getElementById('c-vehicle').value='';
+  renderSaleBill();renderSaleInv();notify('✅ Receipt generated!');
+}
+
+// ══ BILLS ══════════════════════════════════════════════════════════════════════
+function setBillFilter(f){
+  BILL_FILTER=f;
+  document.querySelectorAll('#bill-filters button').forEach(b=>{
+    const on=b.dataset.f===f;
+    b.style.background=on?'var(--or)':'rgba(51,65,85,.5)';
+    b.style.color=on?'#fff':'var(--su)';
+  });
+  renderBillsList();
+}
+function renderBillsList(){
+  const q=(document.getElementById('bills-search')?.value||'').toLowerCase();
+  const f=BILL_FILTER;
+  const filtered=BILLS.filter(b=>{
+    const ms=(b.supplier||b.customer||'').toLowerCase().includes(q)||b.id.toLowerCase().includes(q);
+    const mf=f==='all'||(f==='purchase'&&b.type==='purchase')||(f==='sale'&&b.type==='sale')||(f==='balance'&&b.status==='balance');
+    return ms&&mf;
+  });
+  document.getElementById('bills-count').textContent='('+BILLS.length+')';
+  const el=document.getElementById('bills-list');
+  if(!filtered.length){el.innerHTML=`<div class="empty">No bills found.</div>`;return}
+  el.innerHTML=filtered.map(b=>{
+    const ip=b.type==='purchase';
+    const meta=ip?`${esc(b.supplier)} · ${esc(b.billDate)} · #${esc(b.billNo)}`:`${esc(b.customer)}${b.phone?' · '+esc(b.phone):''}`;
+    const dt=new Date(b.savedAt).toLocaleString('en-IN',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+    return `<div style="background:#0f172a;border-radius:12px;padding:13px;margin-bottom:9px;border:1px solid var(--bor)">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:800;font-size:13px">${ip?'📦 Purchase':'🧑‍💼 Sale'} <span style="font-size:9px;color:var(--mu)">${esc(b.id)}</span></div>
+          <div style="font-size:11px;color:var(--mu);margin-top:3px;line-height:1.5">${meta}<br/>${dt}</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <div style="font-weight:900;font-size:16px;color:var(--or)">${fmt(b.total)}</div>
+          <span class="badge ${b.status==='paid'?'bdg-g':'bdg-o'}" style="margin-top:3px">${b.status==='paid'?'✅ Paid':'⏳ Balance'}</span>
+          ${ip?`<br/><button class="btn-sm btn-muted" style="margin-top:4px;font-size:10px" onclick="toggleBillStatus('${b.id}')">Toggle</button>`:''}
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:9px">
+        ${b.items.slice(0,4).map(i=>`<span class="badge bdg-m">${esc(i.name)} ×${i.qty}</span>`).join('')}
+        ${b.items.length>4?`<span class="badge bdg-m">+${b.items.length-4} more</span>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+function toggleBillStatus(id){
+  const b=BILLS.find(x=>x.id===id);
+  if(b&&b.type==='purchase'){b.status=b.status==='paid'?'balance':'paid';persist();renderBillsList()}
+}
+
+// ══ SUMMARY ═══════════════════════════════════════════════════════════════════
+function renderSummary(){
+  const pb=BILLS.filter(b=>b.type==='purchase'),sb=BILLS.filter(b=>b.type==='sale');
+  const paid=pb.filter(b=>b.status==='paid').reduce((s,b)=>s+b.total,0);
+  const bal=pb.filter(b=>b.status==='balance').reduce((s,b)=>s+b.total,0);
+  const sales=sb.reduce((s,b)=>s+b.total,0);
+  const low=INV.filter(i=>i.qty<5);
+  const cards=[{icon:'🧾',label:'Purchase Bills',val:pb.length,color:'#3b82f6'},{icon:'✅',label:'Paid',val:fmt(paid),color:'#22c55e'},{icon:'⏳',label:'Balance Due',val:fmt(bal),color:'#f97316'},{icon:'💰',label:'Total Sales',val:fmt(sales),color:'#a855f7'},{icon:'📦',label:'In Stock',val:INV.length,color:'#06b6d4'},{icon:'⚠️',label:'Low Stock <5',val:low.length,color:'#ef4444'}];
+  document.getElementById('stat-grid').innerHTML=cards.map(c=>`
+    <div class="stat-card" style="border-top:3px solid ${c.color}">
+      <div style="font-size:20px;margin-bottom:5px">${c.icon}</div>
+      <div style="font-size:16px;font-weight:900;color:${c.color};margin-bottom:2px">${c.val}</div>
+      <div style="font-size:10px;color:var(--mu);font-weight:600">${c.label}</div>
+    </div>`).join('');
+  document.getElementById('low-stock-alert').innerHTML=low.length?`<div class="card">
+    <div class="card-title">⚠️ Low Stock</div>
+    ${low.map(i=>`<div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--bor);font-size:13px"><span>${esc(i.name)}</span><span class="badge bdg-r">Qty: ${i.qty}</span></div>`).join('')}
+  </div>`:'';
+}
+
+// ══ RECEIPT ════════════════════════════════════════════════════════════════════
+function buildReceiptText(bill){
+  const dt=new Date(bill.savedAt);
+  const dateStr=dt.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  const timeStr=dt.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+  const lines=[
+    '🔧 *NAWAZ SCOOTER & SPARE PARTS*',
+    '📍 Rani Durgawati Chowk, Nagpur',
+    '📞 8378095300 | 🔧 8928142730',
+    '━━━━━━━━━━━━━━━━━━━━',
+    `📋 Receipt: ${bill.id}`,
+    `📅 ${dateStr} ${timeStr}`,
+  ];
+  if(bill.customer&&bill.customer!=='Walk-in Customer'){
+    lines.push(`👤 ${bill.customer}${bill.phone?' | 📞 '+bill.phone:''}${bill.vehicle?' | 🚗 '+bill.vehicle:''}`);
+  }
+  lines.push('━━━━━━━━━━━━━━━━━━━━');
+  bill.items.forEach(i=>{
+    lines.push(`▪ ${i.name}`);
+    lines.push(`  ${fmt(i.sellingPrice)} × ${i.qty} = *${fmt(i.sellingPrice*i.qty)}*`);
+  });
+  lines.push('━━━━━━━━━━━━━━━━━━━━');
+  lines.push(`💰 *TOTAL: ${fmt(bill.total)}*`);
+  lines.push(bill.status==='paid'?'✅ *Payment: PAID*':'⏳ *Payment: BALANCE DUE*');
+  lines.push('');
+  lines.push('🙏 Thank you for visiting!');
+  lines.push('_Nawaz Scooter & Spare Parts_');
+  return lines.join('\n');
+}
+
+function openWA(url){
+  const a=document.createElement('a');
+  a.href=url;a.rel='noopener noreferrer';
+  document.body.appendChild(a);a.click();
+  setTimeout(()=>document.body.removeChild(a),500);
+}
+
+function shareReceipt(bill){
+  const text=buildReceiptText(bill);
+  if(navigator.share){
+    navigator.share({title:'Receipt - Nawaz Scooter',text}).catch(()=>{
+      openWA('https://wa.me/?text='+encodeURIComponent(text));
+    });
+  } else {
+    openWA('https://wa.me/?text='+encodeURIComponent(text));
+  }
+}
+
+function shareToWhatsApp(bill){
+  const text=buildReceiptText(bill);
+  const encoded=encodeURIComponent(text);
+  if(bill.phone){
+    let phone=bill.phone.replace(/[\s\-\(\)]/g,'');
+    if(!phone.startsWith('91')&&!phone.startsWith('+')){phone='91'+phone}
+    phone=phone.replace(/^\+/,'');
+    openWA('https://wa.me/'+phone+'?text='+encoded);
+  } else {
+    openWA('https://wa.me/?text='+encoded);
+  }
+}
+
+function sendSMS(bill){
+  const text=buildPlainText(bill);
+  if(bill.phone){
+    let phone=bill.phone.replace(/[\s\-\(\)]/g,'');
+    if(!phone.startsWith('+')&&!phone.startsWith('0')){phone='+91'+phone}
+    openWA('sms:'+phone+'?body='+encodeURIComponent(text));
+  } else {
+    openWA('sms:?body='+encodeURIComponent(text));
+  }
+}
+
+function buildPlainText(bill){
+  const dt=new Date(bill.savedAt);
+  const lines=[
+    'NAWAZ SCOOTER & SPARE PARTS',
+    'Ph: 8378095300 / 8928142730',
+    '--------------------',
+    'Receipt: '+bill.id,
+    dt.toLocaleDateString('en-IN'),
+  ];
+  if(bill.customer&&bill.customer!=='Walk-in Customer'){
+    lines.push(bill.customer+(bill.phone?' | '+bill.phone:'')+(bill.vehicle?' | '+bill.vehicle:''));
+  }
+  lines.push('--------------------');
+  bill.items.forEach(i=>{
+    lines.push(i.name);
+    lines.push('  '+fmt(i.sellingPrice)+' x '+i.qty+' = '+fmt(i.sellingPrice*i.qty));
+  });
+  lines.push('--------------------');
+  lines.push('TOTAL: '+fmt(bill.total));
+  lines.push(bill.status==='paid'?'Payment: PAID':'Payment: BALANCE DUE');
+  lines.push('Thank you! Nawaz Scooter');
+  return lines.join('\n');
+}
+
+let CURRENT_BILL=null;
+let RECEIPT_EDIT_MODE=false;
+
+function showReceipt(bill){
+  CURRENT_BILL=bill;
+  RECEIPT_EDIT_MODE=false;
+  renderReceiptModal(bill);
+  document.getElementById('modal').classList.add('show');
+}
+
+function renderReceiptModal(bill){
+  const dt=new Date(bill.savedAt);
+  document.getElementById('receipt-content').innerHTML=`
+    <div style="text-align:center;margin-bottom:10px">
+      <div style="font-size:26px">🔧</div>
+      <div style="font-size:16px;font-weight:900;letter-spacing:2px">NAWAZ SCOOTER</div>
+      <div style="font-size:10px;color:#64748b;letter-spacing:3px">& SPARE PARTS</div>
+      <div style="font-size:10px;color:#334155;margin-top:6px;line-height:1.8">
+        📞 <b>8378095300</b> (Mudassir)<br/>
+        🔧 <b>8928142730</b> (Mohd. Imteyaz — Head Mechanic)
+      </div>
+    </div>
+    <div style="border-top:2px dashed #cbd5e1;margin:10px 0"></div>
+    <div style="display:flex;justify-content:space-between;font-size:10px;color:#64748b">
+      <span>${esc(bill.id)}</span>
+      <span>${dt.toLocaleDateString('en-IN')} ${dt.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})}</span>
+    </div>
+    ${bill.customer!=='Walk-in Customer'?`<div style="font-size:11px;color:#334155;margin-top:5px"><b>${esc(bill.customer)}</b>${bill.phone?' · '+esc(bill.phone):''}${bill.vehicle?' · '+esc(bill.vehicle):''}</div>`:''}
+    <div style="border-top:2px dashed #cbd5e1;margin:10px 0"></div>
+    <div style="display:flex;font-weight:700;font-size:10px;padding-bottom:4px;border-bottom:1px solid #e2e8f0">
+      <span style="flex:3">Item</span><span style="flex:1;text-align:center">Qty</span>
+      <span style="flex:1.5;text-align:right">Rate</span><span style="flex:1.5;text-align:right">Amt</span>
+    </div>
+    ${bill.items.map(i=>`
+      <div style="display:flex;font-size:10px;padding:3px 0;border-bottom:1px dashed #f1f5f9">
+        <span style="flex:3">${esc(i.name)}</span>
+        <span style="flex:1;text-align:center">${i.qty}</span>
+        <span style="flex:1.5;text-align:right">${fmt(i.sellingPrice)}</span>
+        <span style="flex:1.5;text-align:right">${fmt(i.sellingPrice*i.qty)}</span>
+      </div>`).join('')}
+    <div style="border-top:2px solid #1e293b;margin-top:9px;padding-top:7px;display:flex;justify-content:space-between;font-size:15px;font-weight:900">
+      <span>TOTAL</span><span style="color:#f97316">${fmt(bill.total)}</span>
+    </div>
+    <div style="text-align:center;margin-top:7px;padding:6px;border-radius:7px;font-weight:800;font-size:13px;
+         background:${bill.status==='paid'?'rgba(34,197,94,.15)':'rgba(249,115,22,.15)'};
+         color:${bill.status==='paid'?'#16a34a':'#ea580c'}">
+      ${bill.status==='paid'?'✅ PAID':'⏳ BALANCE DUE'}
+    </div>
+    <div style="text-align:center;margin-top:9px;font-size:10px;color:#64748b">Thank you! 🙏 Nawaz Scooter · Highway</div>
+
+    <!-- SHARE BUTTONS -->
+    <button onclick="shareToWhatsApp(CURRENT_BILL)"
+      style="display:block;width:100%;margin-top:14px;padding:13px;border:none;border-radius:10px;
+             background:#25D366;color:#fff;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit;
+             box-shadow:0 4px 14px rgba(37,211,102,.4)">
+      📲 Share on WhatsApp
+    </button>
+    <button onclick="sendSMS(CURRENT_BILL)"
+      style="display:block;width:100%;margin-top:8px;padding:13px;border:none;border-radius:10px;
+             background:#3b82f6;color:#fff;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit;
+             box-shadow:0 4px 14px rgba(59,130,246,.35)">
+      💬 Send as SMS
+    </button>
+    <button onclick="shareReceipt(CURRENT_BILL)"
+      style="display:block;width:100%;margin-top:8px;padding:11px;border:none;border-radius:10px;
+             background:#334155;color:#e2e8f0;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit">
+      📤 Share via Any App
+    </button>
+
+    <!-- EDIT + PRINT + CLOSE -->
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button onclick="openReceiptEdit()"
+        style="flex:1;padding:9px;border:none;border-radius:8px;background:#a855f720;color:#a855f7;font-weight:700;cursor:pointer;font-family:inherit;font-size:13px">
+        ✏️ Edit Bill
+      </button>
+      <button onclick="window.print()"
+        style="flex:1;padding:9px;border:none;border-radius:8px;background:#1e293b;color:#fff;font-weight:700;cursor:pointer;font-family:inherit">
+        🖨 Print
+      </button>
+      <button onclick="document.getElementById('modal').classList.remove('show')"
+        style="flex:1;padding:9px;border:none;border-radius:8px;background:#f1f5f9;color:#1e293b;font-weight:700;cursor:pointer;font-family:inherit">
+        Close
+      </button>
+    </div>`;
+}
+
+// ── EDIT RECEIPT ──────────────────────────────────────────────────────────────
+function openReceiptEdit(){
+  const bill=CURRENT_BILL;
+  document.getElementById('receipt-content').innerHTML=`
+    <div style="font-weight:800;font-size:15px;color:#1e293b;margin-bottom:14px">✏️ Edit Bill</div>
+
+    <div style="margin-bottom:10px">
+      <label style="font-size:10px;font-weight:800;color:#64748b;text-transform:uppercase;display:block;margin-bottom:4px">Customer</label>
+      <input id="re-cust" type="text" value="${esc(bill.customer)}"
+        style="width:100%;padding:9px 11px;border:1.5px solid #cbd5e1;border-radius:8px;font-size:14px;font-family:inherit;color:#1e293b;background:#f8fafc"/>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:10px">
+      <div>
+        <label style="font-size:10px;font-weight:800;color:#64748b;text-transform:uppercase;display:block;margin-bottom:4px">Phone</label>
+        <input id="re-phone" type="text" value="${esc(bill.phone||'')}"
+          style="width:100%;padding:9px 11px;border:1.5px solid #cbd5e1;border-radius:8px;font-size:14px;font-family:inherit;color:#1e293b;background:#f8fafc"/>
+      </div>
+      <div>
+        <label style="font-size:10px;font-weight:800;color:#64748b;text-transform:uppercase;display:block;margin-bottom:4px">Vehicle</label>
+        <input id="re-veh" type="text" value="${esc(bill.vehicle||'')}"
+          style="width:100%;padding:9px 11px;border:1.5px solid #cbd5e1;border-radius:8px;font-size:14px;font-family:inherit;color:#1e293b;background:#f8fafc"/>
+      </div>
+    </div>
+
+    <div style="font-size:10px;font-weight:800;color:#64748b;text-transform:uppercase;margin-bottom:8px">Items</div>
+    <div id="re-items">
+      ${bill.items.map((item,i)=>`
+        <div style="display:grid;grid-template-columns:1fr 80px 80px 28px;gap:6px;margin-bottom:8px;align-items:center">
+          <input type="text" value="${esc(item.name)}" data-i="${i}" data-f="name" class="re-item-in"
+            style="padding:8px 9px;border:1.5px solid #cbd5e1;border-radius:7px;font-size:12px;font-family:inherit;color:#1e293b;background:#f8fafc"/>
+          <input type="number" value="${item.sellingPrice}" data-i="${i}" data-f="sp" class="re-item-in"
+            style="padding:8px 6px;border:1.5px solid #cbd5e1;border-radius:7px;font-size:12px;font-family:inherit;color:#1e293b;background:#f8fafc;text-align:right"/>
+          <input type="number" value="${item.qty}" min="1" data-i="${i}" data-f="qty" class="re-item-in"
+            style="padding:8px 6px;border:1.5px solid #cbd5e1;border-radius:7px;font-size:12px;font-family:inherit;color:#1e293b;background:#f8fafc;text-align:center"/>
+          <button data-i="${i}" class="re-del-item"
+            style="width:28px;height:28px;border:none;border-radius:6px;background:#fee2e2;color:#ef4444;font-weight:800;cursor:pointer;font-size:14px;padding:0">✕</button>
+        </div>`).join('')}
+    </div>
+
+    <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center">
+      <span style="font-size:11px;font-weight:800;color:#64748b">Payment:</span>
+      <button id="re-paid" onclick="setEditStatus('paid')"
+        style="flex:1;padding:8px;border:none;border-radius:8px;font-weight:800;font-size:12px;cursor:pointer;font-family:inherit;
+               background:${bill.status==='paid'?'#22c55e':'#f1f5f9'};color:${bill.status==='paid'?'#fff':'#64748b'}">✅ Paid</button>
+      <button id="re-bal" onclick="setEditStatus('balance')"
+        style="flex:1;padding:8px;border:none;border-radius:8px;font-weight:800;font-size:12px;cursor:pointer;font-family:inherit;
+               background:${bill.status==='balance'?'#f97316':'#f1f5f9'};color:${bill.status==='balance'?'#fff':'#64748b'}">⏳ Balance</button>
+    </div>
+
+    <div style="display:flex;gap:8px">
+      <button onclick="saveReceiptEdit()"
+        style="flex:2;padding:11px;border:none;border-radius:9px;background:#22c55e;color:#fff;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit">
+        ✅ Save Changes
+      </button>
+      <button onclick="renderReceiptModal(CURRENT_BILL)"
+        style="flex:1;padding:11px;border:none;border-radius:9px;background:#f1f5f9;color:#1e293b;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit">
+        Cancel
+      </button>
+    </div>`;
+
+  // Wire item inputs — direct DOM, no render, keyboard stays open
+  document.querySelectorAll('.re-item-in').forEach(el=>{
+    el.addEventListener('input',function(){
+      const i=parseInt(this.dataset.i),f=this.dataset.f;
+      if(f==='name') CURRENT_BILL.items[i].name=this.value;
+      else if(f==='sp') CURRENT_BILL.items[i].sellingPrice=parseFloat(this.value)||0;
+      else if(f==='qty') CURRENT_BILL.items[i].qty=Math.max(1,parseInt(this.value)||1);
+    });
+  });
+  document.querySelectorAll('.re-del-item').forEach(btn=>{
+    btn.addEventListener('click',function(){
+      CURRENT_BILL.items.splice(parseInt(this.dataset.i),1);
+      openReceiptEdit();
+    });
+  });
+}
+
+let EDIT_STATUS_TEMP=null;
+function setEditStatus(s){
+  EDIT_STATUS_TEMP=s;
+  document.getElementById('re-paid').style.background=s==='paid'?'#22c55e':'#f1f5f9';
+  document.getElementById('re-paid').style.color=s==='paid'?'#fff':'#64748b';
+  document.getElementById('re-bal').style.background=s==='balance'?'#f97316':'#f1f5f9';
+  document.getElementById('re-bal').style.color=s==='balance'?'#fff':'#64748b';
+}
+
+function saveReceiptEdit(){
+  const bill=CURRENT_BILL;
+  bill.customer=document.getElementById('re-cust').value||'Walk-in Customer';
+  bill.phone=document.getElementById('re-phone').value||'';
+  bill.vehicle=document.getElementById('re-veh').value||'';
+  if(EDIT_STATUS_TEMP) bill.status=EDIT_STATUS_TEMP;
+  EDIT_STATUS_TEMP=null;
+  // Recalculate total
+  bill.total=bill.items.reduce((s,i)=>s+i.sellingPrice*i.qty,0);
+  // Save to BILLS array
+  const idx=BILLS.findIndex(b=>b.id===bill.id);
+  if(idx>=0) BILLS[idx]=bill;
+  persist();
+  notify('✅ Bill updated!');
+  renderReceiptModal(bill);
+}
+
+// ══ HELPERS ════════════════════════════════════════════════════════════════════
+function addToInv(items){
+  items.forEach(item=>{
+    const ex=INV.find(i=>i.name.toLowerCase()===item.name.toLowerCase());
+    if(ex){ex.qty+=item.qty;ex.mrp=item.mrp;ex.discountPct=item.discountPct}
+    else INV.push({id:newId(),name:item.name,mrp:item.mrp,discountPct:item.discountPct,qty:item.qty});
+  });
+}
+
+// Init
+addManualRow();
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+</body>
+</html>

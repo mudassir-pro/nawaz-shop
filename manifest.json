@@ -1,0 +1,13 @@
+{
+  "name": "Nawaz Scooter & Spare Parts",
+  "short_name": "Nawaz Shop",
+  "description": "Shop management for Nawaz Scooter & Spare Parts",
+  "start_url": "./index.html",
+  "display": "minimal-ui",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "orientation": "portrait",
+  "icons": [
+    {"src":"icon.png","sizes":"192x192","type":"image/png","purpose":"any maskable"}
+  ]
+}
